@@ -4,13 +4,16 @@ import random
 def chose_difficulty(user_input):
     """Filtrating difficulty from user input"""
     if user_input == '1':
-        return 'Great! You have selected Easy difficulty level'
+        return ("\nGreat! You have selected Easy difficulty level\n"
+                "Let's start the game!")
     elif user_input == '2':
-        return 'Great! You have selected Medium difficulty level'
+        return ("\nGreat! You have selected Medium difficulty level\n"
+                "Let's start the game!")
     elif user_input == '3':
-        return 'Great! You have selected Hard difficulty level'
+        return ("\nGreat! You have selected Hard difficulty level\n"
+                "Let's start the game!")
     else:
-        return 'There is no such difficulty! Try again.'
+        return "\nThere is no such difficulty! Try again."
 
 
 def generate_number():
@@ -20,6 +23,8 @@ def generate_number():
 
 
 def game_start():
+    """Basic information about the game"""
+
     print("\nWelcome to the Number Guessing Game\n"
           "I'm thinking of a number between 1 and 100.\n"
           "You have from 3 to 10 chances to guess the correct number.\n")
@@ -30,14 +35,31 @@ def game_start():
           "3. Hard (3 chances)\n")
 
     user_number = input('Enter you choice (number): ')
-    print(chose_difficulty(user_number))
+    return user_number
 
 
 def main():
+    """Initializing the game"""
     game_start()
+    rand_num = generate_number()
+    attempt_count = 0
 
     while True:
-        gen_num = generate_number()
+        num_input = int(input('\nEnter your guess: '))
+        print(attempt_count)
+
+        if attempt_count == 5:
+            return 'Not enough attempts! Start again.'
+        elif num_input < rand_num:
+            attempt_count += 1
+            print(f'Incorrect! The number is greater than {num_input}.')
+        elif num_input > rand_num:
+            attempt_count += 1
+            print(f'Incorrect! The number is less than {num_input}.')
+        elif num_input == rand_num:
+            return f'Congratulations! You guessed the correct number in {attempt_count} attempts.'
 
 
-main()
+
+result = main()
+print(result)
