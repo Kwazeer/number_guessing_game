@@ -1,19 +1,24 @@
 import random
 
 
-def chose_difficulty(user_input):
+def choose_difficulty(user_input):
     """Filtrating difficulty from user input"""
     if user_input == '1':
-        return ("\nGreat! You have selected Easy difficulty level\n"
-                "Let's start the game!")
+        print("\nGreat! You have selected Easy difficulty level\n"
+              "Let's start the game!")
+        return 10
     elif user_input == '2':
-        return ("\nGreat! You have selected Medium difficulty level\n"
-                "Let's start the game!")
+        print("\nGreat! You have selected Medium difficulty level\n"
+              "Let's start the game!")
+        return 5
     elif user_input == '3':
-        return ("\nGreat! You have selected Hard difficulty level\n"
-                "Let's start the game!")
+        print("\nGreat! You have selected Hard difficulty level\n"
+              "Let's start the game!")
+        return 3
     else:
-        return "\nThere is no such difficulty! Try again."
+        print("\nThere is no such difficulty! Try again.")
+        new_input = input('Enter you choice (number): ')
+        return choose_difficulty(new_input)
 
 
 def generate_number():
@@ -40,16 +45,17 @@ def game_start():
 
 def main():
     """Initializing the game"""
-    game_start()
+    user_input = game_start()
+    difficulty = choose_difficulty(user_input)
     rand_num = generate_number()
-    attempt_count = 0
+
+    attempt_count = 1
 
     while True:
         num_input = int(input('\nEnter your guess: '))
-        print(attempt_count)
 
-        if attempt_count == 5:
-            return 'Not enough attempts! Start again.'
+        if attempt_count == difficulty:
+            return 'Incorrect! Not enough attempts! Start again.'
         elif num_input < rand_num:
             attempt_count += 1
             print(f'Incorrect! The number is greater than {num_input}.')
@@ -58,7 +64,6 @@ def main():
             print(f'Incorrect! The number is less than {num_input}.')
         elif num_input == rand_num:
             return f'Congratulations! You guessed the correct number in {attempt_count} attempts.'
-
 
 
 result = main()
